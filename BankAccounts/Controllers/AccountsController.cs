@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BankAccounts.Repositories;
+using BankAccounts.RequestModel;
+using BankAccounts.ResponseModels;
+using BankAccounts.Services;
+using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BankAccounts.Controllers
 {
@@ -31,22 +34,25 @@ namespace BankAccounts.Controllers
 
         // GET api/<AccountsController>/5
         [HttpGet("{id}")]
-        public string GetAccountById([FromRoute] int id)
+        public ActionResult<string> GetAccountById([FromRoute] int id)
         {
-            return "value";
+
+            return Ok("Test");
         }
 
         // POST api/<AccountsController>
         [HttpPost]
-        public string CreateAccount([FromBody] string name)
+        public ActionResult CreateAccount([FromBody] AccountRequest request)
         {
-            return $"Account {name} created, ID: {Guid.NewGuid()}";
+            AccountService.AddAccount(request);
+            return Ok();
         }
 
         // PUT api/<AccountsController>/5
         [HttpPut("{id}")]
         public string UpdateAccountById([FromRoute] int id, [FromBody] string name)
         {
+            throw new Exception();
             return $"Account {id} updated to new name {name}";
         }
 
